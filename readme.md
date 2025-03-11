@@ -24,9 +24,9 @@
 * Не забывать про SQL-инъекции
 
 ##### Запуск
-`cp .env.example .env`
-`docker compose up --build` - поднять БД для теста
-`make test` - тесты
-`make build && ./main` - запустить сервер
+- `cp .env.example .env`
+- `docker compose up --build` - поднять БД для теста
+- `make test` - тесты
+- `make build && ./main` - запустить сервер
 
 
