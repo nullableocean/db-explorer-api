@@ -1,0 +1,44 @@
+version: '3.1'
+services:
+  # app:
+  #   build: .
+  #   restart: always
+  #   ports:
+  #     - ${APP_PORT}:${APP_PORT}
+  #   depends_on:
+  #     db:
+  #       condition: service_healthy
+  #   networks:
+  #     - app
+
+  db:
+    image: mariadb:10.7
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    ports:
+      - ${DB_PORT}:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
+    volumes:
+      - './_mysql/:/docker-entrypoint-initdb.d/'
+    networks:
+      - app
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - ${ADMINER_PORT}:8080
+    networks:
+      - app
+
+
+networks:
+  app:
+    driver: bridge
+
